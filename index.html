@@ -3,55 +3,81 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Cerveau</title>
+  <title>LVL UP</title>
   <meta name="robots" content="noindex, nofollow">
-  <meta name="theme-color" content="#14213D">
+  <meta name="theme-color" content="#060B18">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Cerveau">
+  <meta name="apple-mobile-web-app-title" content="LVL UP">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <script>
     try { var t = (JSON.parse(localStorage.getItem("cerveau-v1") || "{}").theme) || {}; } catch (e) { var t = {}; }
     document.documentElement.dataset.mode = t.mode === "sombre" || (t.mode !== "clair" && matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
+    // la page d'entrée prend le thème choisi dans l'appli (Système bleu par défaut)
+    var TH = { systeme: ["#060B18", "#4FA3FF", "#9CCBFF"], noirblanc: ["#000000", "#FFFFFF", "#BDBDBD"], navy: ["#0B1324", "#B87333", "#E0A878"],
+      rougevert: ["#160C0C", "#2E8B57", "#7FD1A0"], vertrouge: ["#08140F", "#C0392B", "#F08A7E"], hiver: ["#071426", "#A9D3F0", "#DCEEFF"],
+      printemps: ["#140E10", "#E07A9B", "#F6B7CB"], ete: ["#071C24", "#F2A33A", "#FFD38A"], automne: ["#160C06", "#C8641E", "#F0A868"] }[t.jeu] || ["#060B18", "#4FA3FF", "#9CCBFF"];
+    var R = document.documentElement.style; R.setProperty("--fond", TH[0]); R.setProperty("--acc", TH[1]); R.setProperty("--acc2", TH[2]);
   </script>
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="icon" href="icons/icon-192.png?v=202610142149">
-  <link rel="apple-touch-icon" href="icons/icon-180.png?v=202610142149">
+  <link rel="icon" href="icons/icon-192.png?v=202610142203">
+  <link rel="apple-touch-icon" href="icons/icon-180.png?v=202610142203">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style id="acces-style">
-    html, body { margin: 0; height: 100%; }
-    #acces { position: fixed; inset: 0; display: grid; place-items: center; padding: 24px; background: #0B1324; color: #F2EEE8;
-      font: 15px/1.45 Manrope, system-ui, sans-serif;
-      background-image: radial-gradient(90% 60% at 50% 0%, rgba(184,115,51,.25), transparent 70%); }
-    #acces .boite { width: 100%; max-width: 360px; text-align: center; }
-    #acces img { width: 84px; height: 84px; border-radius: 22px; box-shadow: 0 12px 30px rgba(0,0,0,.45); }
-    #acces h1 { font-family: "Space Grotesk", sans-serif; font-size: 30px; margin: 18px 0 4px; }
-    #acces p { color: #9AA3B5; margin: 0 0 22px; }
-    #acces input { width: 100%; box-sizing: border-box; font: inherit; font-size: 18px; padding: 15px 16px; border-radius: 14px; border: 0; background: #F2EEE8; color: #14213D; text-align: center; }
-    #acces button { width: 100%; margin-top: 10px; font: inherit; font-weight: 800; font-size: 16px; padding: 15px; border-radius: 99px; border: 0; background: #B87333; color: #fff; cursor: pointer; }
+    html, body { margin: 0; height: 100%; background: var(--fond, #060B18); }
+    #acces { position: fixed; inset: 0; display: grid; place-items: center; padding: 24px; overflow: hidden; color: #EAF2FF;
+      font: 15px/1.45 Manrope, system-ui, sans-serif; -webkit-text-size-adjust: 100%;
+      background: radial-gradient(80% 55% at 50% 22%, color-mix(in srgb, var(--acc) 26%, transparent), transparent 70%), var(--fond, #060B18); }
+    #acces::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(156,203,255,.035) 0 1px, transparent 1px 3px); }
+    #acces .boite { position: relative; width: 100%; max-width: 340px; text-align: center; }
+    #acces .sys { display: inline-block; font-size: 11px; font-weight: 800; letter-spacing: .3em; text-transform: uppercase; color: var(--acc2);
+      border: 1px solid color-mix(in srgb, var(--acc) 60%, transparent); border-radius: 6px; padding: 4px 10px; margin-bottom: 18px; }
+    #acces svg { width: 132px; height: 132px; display: block; margin: 0 auto; overflow: visible; filter: drop-shadow(0 0 18px color-mix(in srgb, var(--acc) 55%, transparent)); }
+    #acces .h-ext { fill: color-mix(in srgb, var(--acc) 14%, transparent); stroke: var(--acc2); stroke-width: 3; }
+    #acces .h-int { fill: none; stroke: var(--acc2); stroke-width: 2; stroke-dasharray: 6 5; opacity: .75; animation: monte 3.2s ease-in-out infinite; transform-origin: 60px 60px; }
+    #acces .chev { fill: none; stroke: #fff; stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; animation: saut 1.8s ease-in-out infinite; }
+    @keyframes monte { 50% { transform: scale(1.18); opacity: 1; } }
+    @keyframes saut { 50% { transform: translateY(-4px); } }
+    @media (prefers-reduced-motion: reduce) { #acces .h-int, #acces .chev { animation: none; } }
+    #acces h1 { font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 46px; letter-spacing: .04em; line-height: 1; margin: 20px 0 8px;
+      text-shadow: 0 0 22px color-mix(in srgb, var(--acc) 60%, transparent); }
+    #acces .slogan { color: var(--acc2); font-weight: 700; margin: 0; }
+    #acces p.sous { color: #8D9BB5; margin: 4px 0 26px; font-size: 14px; }
+    #acces input { width: 100%; box-sizing: border-box; font: inherit; font-size: 17px; padding: 15px 16px; border-radius: 12px; text-align: center; color: #fff;
+      background: rgba(255,255,255,.05); border: 1px solid color-mix(in srgb, var(--acc) 55%, transparent); outline: none; }
+    #acces input:focus { border-color: var(--acc2); box-shadow: 0 0 0 3px color-mix(in srgb, var(--acc) 30%, transparent); }
+    #acces input::placeholder { color: #6F7E99; }
+    #acces button { width: 100%; margin-top: 10px; font: inherit; font-weight: 800; font-size: 15px; letter-spacing: .16em; text-transform: uppercase; padding: 15px; border-radius: 12px; border: 0;
+      background: var(--acc); color: #050914; cursor: pointer; box-shadow: 0 0 24px color-mix(in srgb, var(--acc) 45%, transparent); }
     #acces button:disabled { opacity: .5; }
-    #acces .err { color: #FFB38A; min-height: 22px; margin: 10px 0 0; font-weight: 700; }
-    #acces small { display: block; margin-top: 18px; color: #6B7590; font-size: 12px; }
+    #acces .err { color: #FF9A9A; min-height: 22px; margin: 10px 0 0; font-weight: 700; }
+    #acces small { display: block; margin-top: 16px; color: #67748D; font-size: 12px; }
   </style>
 </head>
 <body>
   <div id="acces">
     <form class="boite" id="acces-form">
-      <img src="icons/icon-192.png?v=202610142149" alt="">
-      <h1>Cerveau</h1>
-      <p>Version test privée. Entre ton mot de passe testeur.</p>
-      <input id="acces-mdp" type="password" autocomplete="current-password" placeholder="Mot de passe" required>
-      <button id="acces-btn">Entrer</button>
+      <span class="sys">Système</span>
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <polygon class="h-ext" points="60,6 106.8,33 106.8,87 60,114 13.2,87 13.2,33"/>
+        <polygon class="h-int" points="60,30 86,45 86,75 60,90 34,75 34,45"/>
+        <polyline class="chev" points="40,70 60,50 80,70"/>
+      </svg>
+      <h1>LVL UP</h1>
+      <p class="slogan">Ta vie, en mode jeu.</p>
+      <p class="sous">Version test privée · entre ton code d'accès.</p>
+      <input id="acces-mdp" type="password" autocomplete="current-password" placeholder="Code d'accès" required>
+      <button id="acces-btn">Entrer dans le jeu</button>
       <div class="err" id="acces-err"></div>
-      <small>Tu n'as pas de mot de passe ? Demande-le à Léo.</small>
+      <small>Pas encore de code ? Demande-le à Léo.</small>
     </form>
   </div>
 <script>
 // Page d'accès : l'appli est publiée chiffrée (AES-GCM). La clé de l'appli est chiffrée une fois par testeur
 // avec une clé dérivée de son mot de passe (PBKDF2). Sans mot de passe valide, rien n'est lisible.
 (async () => {
-  const VERSION = "202610142149", ITER = 250000, MEMO = "cerveau-acces";
+  const VERSION = "202610142203", ITER = 250000, MEMO = "cerveau-acces";
   const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
   const enB64 = (u) => btoa(String.fromCharCode(...new Uint8Array(u)));
   const err = document.getElementById("acces-err"), btn = document.getElementById("acces-btn");
@@ -120,8 +146,8 @@
         return lancerSur(acces);
       } catch (x) { /* pas ce testeur */ }
     }
-    btn.disabled = false; btn.textContent = "Entrer";
-    err.textContent = "Mot de passe incorrect.";
+    btn.disabled = false; btn.textContent = "Entrer dans le jeu";
+    err.textContent = "Code incorrect.";
   });
 })();
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");
