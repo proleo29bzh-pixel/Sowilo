@@ -1,6 +1,6 @@
 // Hors-ligne : la page d'accès et l'appli chiffrée sont gardées en cache.
-const CACHE = "cerveau-pub-202610142134";
-const SHELL = ["./", "index.html", "app.enc?v=202610142134", "manifest.webmanifest", "icons/icon-192.png", "icons/icon-512.png", "vendor/three.module.min.js"];
+const CACHE = "cerveau-pub-202610142144";
+const SHELL = ["./", "index.html", "app.enc?v=202610142144", "manifest.webmanifest", "icons/icon-192.png", "icons/icon-512.png", "vendor/three.module.min.js"];
 self.addEventListener("install", (e) => { e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", (e) => {
   e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== CACHE).map((k) => caches.delete(k)))).then(() => self.clients.claim()));
