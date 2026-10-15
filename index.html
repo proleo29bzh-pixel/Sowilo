@@ -20,8 +20,8 @@
     var R = document.documentElement.style; R.setProperty("--fond", TH[0]); R.setProperty("--acc", TH[1]); R.setProperty("--acc2", TH[2]);
   </script>
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="icon" href="icons/icon-192.png?v=202610160052">
-  <link rel="apple-touch-icon" href="icons/icon-180.png?v=202610160052">
+  <link rel="icon" href="icons/icon-192.png?v=202610160101">
+  <link rel="apple-touch-icon" href="icons/icon-180.png?v=202610160101">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style id="acces-style">
@@ -68,7 +68,7 @@
           <path d="M60 16L36 43L64 57L40 84" fill="none" stroke="#0B1020" stroke-opacity=".5" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M60 16L36 43L64 57L40 84" fill="none" stroke="url(#sw)" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M60 16L36 43L64 57L40 84" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" transform="translate(-4.5 -3)"/>
-          <g class="oeil"><rect x="42.5" y="44" width="5.4" height="11" rx="2.7" fill="#0B1020"/><rect x="52.1" y="44" width="5.4" height="11" rx="2.7" fill="#0B1020"/><circle cx="45.8" cy="46.8" r="1.3" fill="#fff"/><circle cx="55.4" cy="46.8" r="1.3" fill="#fff"/></g>
+          <g class="oeil"><rect x="39" y="41" width="7.5" height="15" rx="3.75" fill="#14101E"/><rect x="53.5" y="41" width="7.5" height="15" rx="3.75" fill="#14101E"/><circle cx="43.6" cy="44.8" r="1.7" fill="#fff"/><circle cx="58.1" cy="44.8" r="1.7" fill="#fff"/></g><path d="M42.5 58a7.5 7 0 0 0 15 0z" fill="#14101E"/><path d="M46 62.2a4 2.6 0 0 0 8 0z" fill="#FF7882"/>
         </g>
       </svg>
       <h1>Sowilo</h1>
@@ -84,7 +84,7 @@
 // Page d'accès : l'appli est publiée chiffrée (AES-GCM). La clé de l'appli est chiffrée une fois par testeur
 // avec une clé dérivée de son mot de passe (PBKDF2). Sans mot de passe valide, rien n'est lisible.
 (async () => {
-  const VERSION = "202610160052", ITER = 250000, MEMO = "cerveau-acces";
+  const VERSION = "202610160101", ITER = 250000, MEMO = "cerveau-acces";
   const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
   const enB64 = (u) => btoa(String.fromCharCode(...new Uint8Array(u)));
   const err = document.getElementById("acces-err"), btn = document.getElementById("acces-btn");
