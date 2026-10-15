@@ -20,8 +20,8 @@
     var R = document.documentElement.style; R.setProperty("--fond", TH[0]); R.setProperty("--acc", TH[1]); R.setProperty("--acc2", TH[2]);
   </script>
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="icon" href="icons/icon-192.png?v=202610151733">
-  <link rel="apple-touch-icon" href="icons/icon-180.png?v=202610151733">
+  <link rel="icon" href="icons/icon-192.png?v=202610151747">
+  <link rel="apple-touch-icon" href="icons/icon-180.png?v=202610151747">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style id="acces-style">
@@ -87,7 +87,7 @@
 // Page d'accès : l'appli est publiée chiffrée (AES-GCM). La clé de l'appli est chiffrée une fois par testeur
 // avec une clé dérivée de son mot de passe (PBKDF2). Sans mot de passe valide, rien n'est lisible.
 (async () => {
-  const VERSION = "202610151733", ITER = 250000, MEMO = "cerveau-acces";
+  const VERSION = "202610151747", ITER = 250000, MEMO = "cerveau-acces";
   const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
   const enB64 = (u) => btoa(String.fromCharCode(...new Uint8Array(u)));
   const err = document.getElementById("acces-err"), btn = document.getElementById("acces-btn");
