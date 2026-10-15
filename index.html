@@ -20,8 +20,8 @@
     var R = document.documentElement.style; R.setProperty("--fond", TH[0]); R.setProperty("--acc", TH[1]); R.setProperty("--acc2", TH[2]);
   </script>
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="icon" href="icons/icon-192.png?v=202610152212">
-  <link rel="apple-touch-icon" href="icons/icon-180.png?v=202610152212">
+  <link rel="icon" href="icons/icon-192.png?v=202610152218">
+  <link rel="apple-touch-icon" href="icons/icon-180.png?v=202610152218">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style id="acces-style">
@@ -29,7 +29,6 @@
     #acces { position: fixed; inset: 0; display: grid; place-items: center; padding: 24px; overflow: hidden; color: #EAF2FF;
       font: 15px/1.45 Manrope, system-ui, sans-serif; -webkit-text-size-adjust: 100%;
       background: radial-gradient(80% 55% at 50% 22%, color-mix(in srgb, var(--acc) 26%, transparent), transparent 70%), var(--fond, #060B18); }
-    #acces::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, rgba(156,203,255,.035) 0 1px, transparent 1px 3px); }
     #acces .boite { position: relative; width: 100%; max-width: 340px; text-align: center; }
     #acces svg { width: 150px; height: 150px; display: block; margin: 0 auto; overflow: visible; filter: drop-shadow(0 0 20px rgba(255,179,71,.45)); }
     #acces .soleil { transform-origin: 50px 50px; animation: pulse 3.4s ease-in-out infinite; }
@@ -87,7 +86,7 @@
 // Page d'accès : l'appli est publiée chiffrée (AES-GCM). La clé de l'appli est chiffrée une fois par testeur
 // avec une clé dérivée de son mot de passe (PBKDF2). Sans mot de passe valide, rien n'est lisible.
 (async () => {
-  const VERSION = "202610152212", ITER = 250000, MEMO = "cerveau-acces";
+  const VERSION = "202610152218", ITER = 250000, MEMO = "cerveau-acces";
   const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
   const enB64 = (u) => btoa(String.fromCharCode(...new Uint8Array(u)));
   const err = document.getElementById("acces-err"), btn = document.getElementById("acces-btn");
