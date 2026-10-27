@@ -20,8 +20,8 @@
     var R = document.documentElement.style; R.setProperty("--fond", TH[0]); R.setProperty("--acc", TH[1]); R.setProperty("--acc2", TH[2]);
   </script>
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="icon" href="icons/icon-192.png?v=202610271908">
-  <link rel="apple-touch-icon" href="icons/icon-180.png?v=202610271908">
+  <link rel="icon" href="icons/icon-192.png?v=202610271914">
+  <link rel="apple-touch-icon" href="icons/icon-180.png?v=202610271914">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style id="acces-style">
@@ -52,6 +52,12 @@
       background: var(--acc); color: #050914; cursor: pointer; box-shadow: 0 0 24px color-mix(in srgb, var(--acc) 45%, transparent); }
     #acces button:disabled { opacity: .5; }
     #acces .err { color: #FF9A9A; min-height: 22px; margin: 10px 0 0; font-weight: 700; }
+    #acces .saves { margin: 14px 0 0; text-align: left; font-size: 14px; }
+    #acces .saves b { display: block; color: var(--acc2); font-size: 13px; letter-spacing: .04em; margin-bottom: 6px; }
+    #acces .saves label { display: flex; gap: 10px; align-items: center; padding: 10px 12px; margin-top: 6px; border-radius: 12px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); cursor: pointer; }
+    #acces .saves label:has(input:checked) { border-color: var(--acc); background: color-mix(in srgb, var(--acc) 14%, transparent); }
+    #acces .saves input { width: auto; padding: 0; accent-color: var(--acc); box-shadow: none; }
+    #acces .saves span small { display: inline; margin: 0; color: #8D9BB5; }
     #acces small { display: block; margin-top: 16px; color: #67748D; font-size: 12px; }
   </style>
 </head>
@@ -77,6 +83,7 @@
       <input id="acces-mdp" type="password" autocomplete="current-password" placeholder="Code d'accès" required>
       <button id="acces-btn">Entrer dans le jeu</button>
       <div class="err" id="acces-err"></div>
+      <div class="saves" id="acces-saves"></div>
       <small>Pas encore de code ? Demande-le à Léo.</small>
     </form>
   </div>
@@ -84,7 +91,7 @@
 // Page d'accès : l'appli est publiée chiffrée (AES-GCM). La clé de l'appli est chiffrée une fois par testeur
 // avec une clé dérivée de son mot de passe (PBKDF2). Sans mot de passe valide, rien n'est lisible.
 (async () => {
-  const VERSION = "202610271908", ITER = 250000, MEMO = "cerveau-acces";
+  const VERSION = "202610271914", ITER = 250000, MEMO = "cerveau-acces";
   const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
   const enB64 = (u) => btoa(String.fromCharCode(...new Uint8Array(u)));
   const err = document.getElementById("acces-err"), btn = document.getElementById("acces-btn");
@@ -139,8 +146,22 @@
     if (memo) localStorage.removeItem(MEMO);   // accès retiré
   } catch (e) { localStorage.removeItem(MEMO); }
 
+  // Les progressions déjà enregistrées sur ce téléphone : on montre le prénom, la personne choisit la sienne
+  const saves = Object.keys(localStorage).filter((k) => k.startsWith("cerveau-v1") || k.startsWith("cerveau-sauvegarde-")).map((k) => {
+    try { const d = JSON.parse(localStorage.getItem(k)), t = +(k.match(/sauvegarde-(\d+)/) || [])[1];
+      return { k, nom: d?.joueur?.prenom || d?.profil?.prenom || "", ko: Math.max(1, Math.round(localStorage.getItem(k).length / 1024)), date: t ? new Date(t).toLocaleDateString("fr-FR") : "" };
+    } catch (e) { return null; }
+  }).filter((x) => x && x.nom).sort((a, b) => b.ko - a.ko);
+  const zone = document.getElementById("acces-saves");
+  if (saves.length) {
+    const esc = (x) => String(x).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+    zone.innerHTML = `<b>${saves.length > 1 ? "Ta progression sur ce téléphone : choisis la tienne" : "Progression retrouvée sur ce téléphone"}</b>` +
+      saves.map((x, i) => `<label><input type="radio" name="save" value="${esc(x.k)}"${i ? "" : " checked"}><span>${esc(x.nom)} <small>· ${x.ko} Ko${x.date ? " · sauvegarde du " + x.date : ""}</small></span></label>`).join("");
+  }
   document.getElementById("acces-form").addEventListener("submit", async (ev) => {
     ev.preventDefault();
+    const choix = document.querySelector('#acces-saves input[name="save"]:checked');
+    try { if (choix) localStorage.setItem("sowilo-choix", choix.value); } catch (x) {}
     const mdp = document.getElementById("acces-mdp").value.trim().toLowerCase().replace(/[‐-―−]/g, "-").replace(/\s+/g, "");
     if (!mdp) return;
     btn.disabled = true; btn.textContent = "Vérification…"; err.textContent = "";
