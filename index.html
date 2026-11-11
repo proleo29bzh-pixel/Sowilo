@@ -22,8 +22,8 @@
     try { if (localStorage.getItem("cerveau-acces")) document.documentElement.classList.add("auto"); } catch (e) {}
   </script>
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="icon" href="icons/icon-192.png?v=202611110259">
-  <link rel="apple-touch-icon" href="icons/icon-180.png?v=202611110259">
+  <link rel="icon" href="icons/icon-192.png?v=202611110304">
+  <link rel="apple-touch-icon" href="icons/icon-180.png?v=202611110304">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style id="acces-style">
@@ -71,7 +71,7 @@
 <body>
   <div id="acces">
     <form class="boite" id="acces-form">
-      <img class="logo" src="icons/icon-512.png?v=202611110259" alt="">
+      <img class="logo" src="icons/icon-512.png?v=202611110304" alt="">
       <h1>Sowilo</h1>
       <p class="slogan">Ta vie, en mode jeu.</p>
       <p class="sous">Version test privée · entre ton code d'accès.</p>
@@ -86,7 +86,7 @@
 // Page d'accès : l'appli est publiée chiffrée (AES-GCM). La clé de l'appli est chiffrée une fois par testeur
 // avec une clé dérivée de son mot de passe (PBKDF2). Sans mot de passe valide, rien n'est lisible.
 (async () => {
-  const VERSION = "202611110259", ITER = 250000, MEMO = "cerveau-acces";
+  const VERSION = "202611110304", ITER = 250000, MEMO = "cerveau-acces";
   const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
   const enB64 = (u) => btoa(String.fromCharCode(...new Uint8Array(u)));
   const err = document.getElementById("acces-err"), btn = document.getElementById("acces-btn");
