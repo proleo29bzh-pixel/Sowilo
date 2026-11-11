@@ -17,11 +17,13 @@
     var TH = { systeme: ["#060B18", "#4FA3FF", "#9CCBFF"], noirblanc: ["#000000", "#FFFFFF", "#BDBDBD"], navy: ["#0B1324", "#B87333", "#E0A878"],
       rougevert: ["#160C0C", "#2E8B57", "#7FD1A0"], vertrouge: ["#08140F", "#C0392B", "#F08A7E"], hiver: ["#071426", "#A9D3F0", "#DCEEFF"],
       printemps: ["#140E10", "#E07A9B", "#F6B7CB"], ete: ["#071C24", "#F2A33A", "#FFD38A"], automne: ["#160C06", "#C8641E", "#F0A868"] }[t.jeu] || ["#060B18", "#4FA3FF", "#9CCBFF"];
-    var R = document.documentElement.style; R.setProperty("--fond", TH[0]); R.setProperty("--acc", TH[1]); R.setProperty("--acc2", TH[2]);
+    var R = document.documentElement.style; R.setProperty("--fond", "#06080F"); R.setProperty("--acc", "#FFB347"); R.setProperty("--acc2", "#FFD27A");
+    // accès déjà mémorisé : on n'affiche pas le formulaire, juste le logo pendant le chargement
+    try { if (localStorage.getItem("cerveau-acces")) document.documentElement.classList.add("auto"); } catch (e) {}
   </script>
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="icon" href="icons/icon-192.png?v=202611070152">
-  <link rel="apple-touch-icon" href="icons/icon-180.png?v=202611070152">
+  <link rel="icon" href="icons/icon-192.png?v=202611110229">
+  <link rel="apple-touch-icon" href="icons/icon-180.png?v=202611110229">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style id="acces-style">
@@ -59,24 +61,17 @@
     #acces .saves input { width: auto; padding: 0; accent-color: var(--acc); box-shadow: none; }
     #acces .saves span small { display: inline; margin: 0; color: #8D9BB5; }
     #acces small { display: block; margin-top: 16px; color: #67748D; font-size: 12px; }
+    #acces .logo { width: 132px; height: 132px; border-radius: 30px; display: block; margin: 0 auto; box-shadow: 0 0 34px rgba(255,179,71,.45); animation: pulse-logo 2.6s ease-in-out infinite; }
+    @keyframes pulse-logo { 50% { box-shadow: 0 0 54px rgba(255,179,71,.7); } }
+    /* accès mémorisé : pas de formulaire, juste le logo et « Chargement… » */
+    html.auto #acces .boite > :not(.logo):not(h1) { display: none; }
+    html.auto #acces .boite::after { content: "Chargement…"; display: block; margin-top: 10px; color: #FFD27A; font-weight: 700; letter-spacing: .1em; }
   </style>
 </head>
 <body>
   <div id="acces">
     <form class="boite" id="acces-form">
-      <svg viewBox="0 0 100 100" aria-hidden="true">
-        <defs><linearGradient id="sw" x1="0" y1="10" x2="0" y2="92" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFE7A8"/><stop offset=".55" stop-color="#FFB347"/><stop offset="1" stop-color="#F28C28"/></linearGradient>
-          <radialGradient id="sol" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FFB347" stop-opacity=".45"/><stop offset="1" stop-color="#FFB347" stop-opacity="0"/></radialGradient></defs>
-        <circle class="soleil" cx="50" cy="50" r="50" fill="url(#sol)"/>
-        <g class="rayons" stroke="#FFD27A" stroke-width="2.5" stroke-linecap="round" opacity=".55"><path d="M50 2v7M50 91v7M2 50h7M91 50h7M16 16l5 5M79 79l5 5M84 16l-5 5M21 79l-5 5"/></g>
-        <g class="perso">
-          <ellipse cx="45" cy="95" rx="18" ry="3" fill="#000" opacity=".3"/>
-          <path d="M60 16L36 43L64 57L40 84" fill="none" stroke="#0B1020" stroke-opacity=".5" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M60 16L36 43L64 57L40 84" fill="none" stroke="url(#sw)" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M60 16L36 43L64 57L40 84" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" transform="translate(-4.5 -3)"/>
-          <g class="oeil"><rect x="39" y="41" width="7.5" height="15" rx="3.75" fill="#14101E"/><rect x="53.5" y="41" width="7.5" height="15" rx="3.75" fill="#14101E"/><circle cx="43.6" cy="44.8" r="1.7" fill="#fff"/><circle cx="58.1" cy="44.8" r="1.7" fill="#fff"/></g><path d="M42.5 58a7.5 7 0 0 0 15 0z" fill="#14101E"/><path d="M46 62.2a4 2.6 0 0 0 8 0z" fill="#FF7882"/>
-        </g>
-      </svg>
+      <img class="logo" src="icons/icon-512.png?v=202611110229" alt="">
       <h1>Sowilo</h1>
       <p class="slogan">Ta vie, en mode jeu.</p>
       <p class="sous">Version test privée · entre ton code d'accès.</p>
@@ -91,7 +86,7 @@
 // Page d'accès : l'appli est publiée chiffrée (AES-GCM). La clé de l'appli est chiffrée une fois par testeur
 // avec une clé dérivée de son mot de passe (PBKDF2). Sans mot de passe valide, rien n'est lisible.
 (async () => {
-  const VERSION = "202611070152", ITER = 250000, MEMO = "cerveau-acces";
+  const VERSION = "202611110229", ITER = 250000, MEMO = "cerveau-acces";
   const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
   const enB64 = (u) => btoa(String.fromCharCode(...new Uint8Array(u)));
   const err = document.getElementById("acces-err"), btn = document.getElementById("acces-btn");
@@ -145,6 +140,7 @@
     if (e) { const acces = await ouvrir(e, await cleTesteur(b64(memo.kek))); await lancerSur(acces); return; }
     if (memo) localStorage.removeItem(MEMO);   // accès retiré
   } catch (e) { localStorage.removeItem(MEMO); }
+  document.documentElement.classList.remove("auto");   // pas d'accès valable : on montre le formulaire
 
   // Les progressions déjà enregistrées sur ce téléphone : on montre le prénom, la personne choisit la sienne
   const saves = Object.keys(localStorage).filter((k) => k.startsWith("cerveau-v1") || k.startsWith("cerveau-sauvegarde-")).map((k) => {
