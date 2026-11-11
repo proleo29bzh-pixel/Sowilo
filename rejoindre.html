@@ -47,6 +47,23 @@
   .point { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; align-items: start; padding: 14px; border-radius: 16px; background: var(--carte); border: 1px solid var(--trait); }
   .point .ico { font-size: 24px; line-height: 1; } .point b { display: block; font-size: 16px; margin-bottom: 2px; } .point p { color: var(--doux); font-size: 14.5px; }
 
+  /* le duel */
+  .duel { position: relative; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 6px; padding: 14px; border-radius: 20px;
+    background: radial-gradient(circle at 50% 50%, rgba(255,201,74,.25), transparent 60%), var(--carte); border: 1px solid var(--trait); }
+  .duel img { width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: center 15%; border-radius: 14px; }
+  .duel .g { border: 2px solid #FF5A5A; box-shadow: 0 0 22px rgba(255,90,90,.5); transform: rotate(-4deg); }
+  .duel .d { border: 2px solid #6FA8FF; box-shadow: 0 0 22px rgba(111,168,255,.5); transform: rotate(4deg); }
+  .duel .vs { font: 700 30px/1 var(--titre); color: var(--or); text-shadow: 0 0 18px rgba(255,201,74,.8); }
+
+  /* les compagnons : détourés, posés sur une aura de leur rareté */
+  .compas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+  .compas figure { margin: 0; display: grid; justify-items: center; gap: 4px; padding: 10px 6px; border-radius: 16px; background: var(--carte); border: 1px solid color-mix(in srgb, var(--r) 55%, transparent); text-align: center; }
+  .compas img { width: 100%; aspect-ratio: 1; object-fit: contain;
+    background: radial-gradient(ellipse 46% 12% at 50% 90%, color-mix(in srgb, var(--r) 75%, #fff 10%) 0 40%, transparent 100%),
+      radial-gradient(circle at 50% 55%, color-mix(in srgb, var(--r) 55%, transparent) 0, color-mix(in srgb, var(--r) 22%, transparent) 42%, transparent 68%);
+    filter: drop-shadow(0 0 5px color-mix(in srgb, var(--r) 80%, transparent)); }
+  .compas figcaption { font-weight: 800; font-size: 13.5px; } .compas small { display: block; color: var(--r); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: .06em; }
+
   /* le test */
   .etapes { display: grid; gap: 0; border-left: 2px solid rgba(255,201,74,.4); margin-left: 8px; }
   .etape { position: relative; padding: 0 0 18px 22px; } .etape:last-child { padding-bottom: 0; }
@@ -105,10 +122,39 @@
     <div class="points">
       <div class="point"><span class="ico">⚔️</span><div><b>Des quêtes chaque jour</b><p>2 petites quêtes par rune : une séance, 8 verres d'eau, 7 h de sommeil, une gratitude… Chaque quête rapporte de l'XP.</p></div></div>
       <div class="point"><span class="ico">🃏</span><div><b>Ta carte de joueur</b><p>Ta photo ou ton héros, ton niveau en énorme, une aura qui grandit avec ton rang : Bronze, Argent, Or… puis des rangs secrets jusqu'à Légendaire.</p></div></div>
-      <div class="point"><span class="ico">🎁</span><div><b>Un coffre chaque jour</b><p>Réussis toutes tes quêtes et ouvre un coffre : il cache un design de carte, du commun au légendaire.</p></div></div>
+      <div class="point"><span class="ico">🎁</span><div><b>Un coffre chaque jour</b><p>Réussis toutes tes quêtes et ouvre un coffre : des cartes à collectionner et parfois un design pour ta carte de joueur.</p></div></div>
       <div class="point"><span class="ico">🔥</span><div><b>Ton corps de runes</b><p>Plus tu montes une rune, plus ses veines de lumière rejoignent le cœur. Ton torse s'allume avec tes progrès.</p></div></div>
-      <div class="point"><span class="ico">⚡</span><div><b>Le Duel 1v1</b><p>6 manches rune contre rune, puis la finale Sowilo. Gagne des étoiles et des titres qui s'affichent sur ta carte.</p></div></div>
+      
       <div class="point"><span class="ico">❄️</span><div><b>Les Arcs de saison</b><p>3 mois pour te transformer, avec 10 quêtes par jour et une carte de saison à décrocher.</p></div></div>
+    </div>
+  </section>
+
+  <section style="display:grid;gap:14px">
+    <span class="eyebrow">Le Duel 1v1</span>
+    <h2>Rune contre rune</h2>
+    <div class="duel">
+      <img src="icons/persos/uruz.jpg" alt="" class="g">
+      <span class="vs">VS</span>
+      <img src="icons/persos/hagalaz.jpg" alt="" class="d">
+    </div>
+    <p class="note" style="font-size:14.5px">Choisis ton champion, affronte 6 manches (Corps contre Corps, Sommeil contre Sommeil…), puis la grande finale Sowilo. Plus tu progresses dans ta vraie vie, plus tes runes sont fortes. Gagne des étoiles ⭐ et monte de Recrue à <b style="color:var(--or2)">Légende de l'arène</b>.</p>
+  </section>
+
+  <section style="display:grid;gap:14px">
+    <span class="eyebrow">100 cartes à collectionner</span>
+    <h2>Les petits compagnons</h2>
+    <div class="compas">
+      <figure style="--r:#4CC38A"><img src="icons/compagnons/biceps.png" alt=""><figcaption>Bicepouf<small>Commun</small></figcaption></figure>
+      <figure style="--r:#4FA3FF"><img src="icons/compagnons/coeur.png" alt=""><figcaption>Boumboum<small>Rare</small></figcaption></figure>
+      <figure style="--r:#FFC94A"><img src="icons/compagnons/hypertrophie.png" alt=""><figcaption>Roi Musclor<small>Légendaire</small></figcaption></figure>
+      <figure style="--r:#A9B4C6"><img src="icons/compagnons/saumon.png" alt=""><figcaption>Saumouille<small>Peu commun</small></figcaption></figure>
+      <figure style="--r:#A9B4C6"><img src="icons/compagnons/melatonine.png" alt=""><figcaption>Mélatonin<small>Peu commun</small></figcaption></figure>
+      <figure style="--r:#FFC94A"><img src="icons/compagnons/tresor.png" alt=""><figcaption>Coffre d'Or<small>Légendaire</small></figcaption></figure>
+    </div>
+    <div class="points">
+      <div class="point"><span class="ico">🎴</span><div><b>1 quête finie = 1 booster</b><p>Jusqu'à 10 boosters par jour. Tu le touches, il éclate, et une carte sort : du commun au mythique.</p></div></div>
+      <div class="point"><span class="ico">🐾</span><div><b>Un compagnon à tes côtés</b><p>Choisis ta carte préférée : elle se pose à côté de ta carte de joueur et te donne un pouvoir en Duel.</p></div></div>
+      <div class="point"><span class="ico">♻️</span><div><b>Échange tes doublons</b><p>3 cartes identiques de rareté = 1 carte plus rare. Jusqu'aux 4 mythiques de Sowilo.</p></div></div>
     </div>
   </section>
 
