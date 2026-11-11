@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Teste Sowilo</title>
+<meta name="description" content="Sowilo, ta vie en mode jeu : deviens testeur.">
+<meta property="og:title" content="Teste Sowilo — ta vie en mode jeu">
+<meta property="og:description" content="6 héros, 6 domaines de ta vie, des quêtes, des rangs et des duels. Deviens testeur.">
+<meta property="og:image" content="https://proleo29bzh-pixel.github.io/Sowilo/icons/icon-512.png">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* Sowilo : nuit profonde, or solaire, et la couleur de chaque rune */
+  :root { --fond: #06080F; --carte: #0E1628; --trait: rgba(255,255,255,.1); --texte: #EAF2FF; --doux: #A9BDD8; --or: #FFC94A; --or2: #FFE7A8; --rouge: #FF6B6B;
+    --titre: "Space Grotesk", system-ui, sans-serif; --corps: Manrope, system-ui, sans-serif; color-scheme: dark; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--fond); color: var(--texte); font: 16px/1.55 var(--corps); }
+  .page { max-width: 640px; margin: 0 auto; padding: max(20px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 60px max(16px, env(safe-area-inset-left)); display: grid; gap: 34px; }
+  h1, h2 { font-family: var(--titre); line-height: 1.1; margin: 0; text-wrap: balance; }
+  h2 { font-size: 26px; } p { margin: 0; }
+  .eyebrow { font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--or); }
+
+  /* haut : l'icône, le nom, la promesse */
+  .hero { display: grid; justify-items: center; text-align: center; gap: 14px; padding-top: 10px; }
+  .hero .icone { width: 112px; height: 112px; border-radius: 26px; box-shadow: 0 0 40px rgba(255,190,80,.45); }
+  .hero h1 { font-size: 52px; letter-spacing: .04em; background: linear-gradient(90deg, var(--or2), var(--or), var(--or2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero .promesse { font-size: 20px; font-weight: 800; }
+  .hero .sous { color: var(--doux); max-width: 34ch; }
+
+  /* les 6 héros en éventail */
+  .heros { position: relative; height: 210px; margin: 0 -16px; overflow: hidden; }
+  .heros img { position: absolute; left: 50%; bottom: -40px; width: 27%; max-width: 160px; aspect-ratio: 3/4; object-fit: cover; object-position: center 15%; border-radius: 14px;
+    border: 2px solid rgba(255,255,255,.25); box-shadow: 0 8px 22px rgba(0,0,0,.6); transform-origin: 50% 130%;
+    transform: translateX(-50%) translateX(calc(var(--i) * 42%)) rotate(calc(var(--i) * 8deg)); }
+  .heros img.centre { z-index: 3; border-color: var(--or); box-shadow: 0 0 32px rgba(255,190,80,.6); }
+
+  /* les 6 domaines */
+  .runes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .rune { display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 10px; align-items: center; padding: 10px; border-radius: 16px; background: var(--carte); border: 1px solid color-mix(in srgb, var(--c) 45%, transparent); }
+  .rune img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; object-position: center 15%; border: 2px solid var(--c); }
+  .rune b { display: block; color: var(--c); font-size: 15px; } .rune small { color: var(--doux); font-size: 12.5px; line-height: 1.35; display: block; }
+
+  /* ce qu'on y fait */
+  .points { display: grid; gap: 10px; }
+  .point { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; align-items: start; padding: 14px; border-radius: 16px; background: var(--carte); border: 1px solid var(--trait); }
+  .point .ico { font-size: 24px; line-height: 1; } .point b { display: block; font-size: 16px; margin-bottom: 2px; } .point p { color: var(--doux); font-size: 14.5px; }
+
+  /* le test */
+  .etapes { display: grid; gap: 0; border-left: 2px solid rgba(255,201,74,.4); margin-left: 8px; }
+  .etape { position: relative; padding: 0 0 18px 22px; } .etape:last-child { padding-bottom: 0; }
+  .etape::before { content: ""; position: absolute; left: -7px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: var(--or); box-shadow: 0 0 10px var(--or); }
+  .etape b { display: block; } .etape small { color: var(--or2); font-weight: 800; font-size: 12.5px; letter-spacing: .06em; text-transform: uppercase; } .etape p { color: var(--doux); font-size: 14.5px; }
+
+  /* l'appel : envoyer son adresse Gmail */
+  .appel { display: grid; gap: 12px; padding: 22px 18px; border-radius: 22px; text-align: center; background: radial-gradient(circle at 50% 0%, rgba(255,190,80,.22), transparent 70%), var(--carte); border: 2px solid var(--or); box-shadow: 0 0 30px rgba(255,190,80,.25); }
+  .appel h2 { font-size: 28px; }
+  .appel ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; text-align: left; }
+  .appel li { padding: 10px 12px; border-radius: 12px; background: rgba(255,255,255,.05); font-size: 14.5px; }
+  .appel li b { color: var(--or2); }
+  .note { color: var(--doux); font-size: 13px; }
+  footer { text-align: center; color: #67748D; font-size: 12.5px; }
+  @media (min-width: 560px) { .runes { grid-template-columns: repeat(3, minmax(0, 1fr)); } .rune { grid-template-columns: 1fr; justify-items: center; text-align: center; } }
+  @media (prefers-reduced-motion: no-preference) { .hero .icone { animation: pulse 3s ease-in-out infinite; } @keyframes pulse { 50% { box-shadow: 0 0 60px rgba(255,190,80,.7); } } }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <section class="hero">
+    <img class="icone" src="icons/icon-512.png" alt="Icône de Sowilo : un éclair doré gravé dans un torse">
+    <span class="eyebrow">Version test · novembre 2026</span>
+    <h1>SOWILO</h1>
+    <p class="promesse">Ta vie, en mode jeu.</p>
+    <p class="sous">Chaque vraie action te fait gagner de l'XP : une séance, un bon repas, une bonne nuit, un pas vers ton projet. Ton personnage monte de niveau avec toi.</p>
+  </section>
+
+  <div class="heros" aria-hidden="true">
+    <img src="icons/persos/uruz.jpg" alt="" style="--i:-3">
+    <img src="icons/persos/jera.jpg" alt="" style="--i:-2">
+    <img src="icons/persos/isa.jpg" alt="" style="--i:-1">
+    <img src="icons/persos/dagaz.jpg" alt="" style="--i:1">
+    <img src="icons/persos/tiwaz.jpg" alt="" style="--i:2">
+    <img src="icons/persos/fehu.jpg" alt="" style="--i:3">
+    <img class="centre" src="icons/persos/sowilo-enrage.jpg" alt="" style="--i:0">
+  </div>
+
+  <section style="display:grid;gap:14px">
+    <span class="eyebrow">6 runes · 6 domaines de ta vie</span>
+    <h2>Un héros pour chaque part de toi</h2>
+    <div class="runes">
+      <div class="rune" style="--c:#FF5A5A"><img src="icons/persos/uruz.jpg" alt=""><div><b>ᚢ Uruz · Corps</b><small>Le sport, les pas, les séances</small></div></div>
+      <div class="rune" style="--c:#4CC38A"><img src="icons/persos/jera.jpg" alt=""><div><b>ᛃ Jera · Carburant</b><small>Les repas, l'eau, la nutrition</small></div></div>
+      <div class="rune" style="--c:#6FA8FF"><img src="icons/persos/isa.jpg" alt=""><div><b>ᛁ Isa · Repos</b><small>Le sommeil, la récupération</small></div></div>
+      <div class="rune" style="--c:#9B6BFF"><img src="icons/persos/dagaz.jpg" alt=""><div><b>ᛞ Dagaz · Esprit</b><small>L'humeur, le journal, le mental</small></div></div>
+      <div class="rune" style="--c:#E0A878"><img src="icons/persos/tiwaz.jpg" alt=""><div><b>ᛏ Tiwaz · Carrière</b><small>Tes projets, tes études, ton travail</small></div></div>
+      <div class="rune" style="--c:#FFC94A"><img src="icons/persos/fehu.jpg" alt=""><div><b>ᚠ Fehu · Argent</b><small>Tes dépenses, ton épargne</small></div></div>
+    </div>
+  </section>
+
+  <section style="display:grid;gap:14px">
+    <span class="eyebrow">Ce que tu y fais</span>
+    <h2>Un jeu qui te fait avancer pour de vrai</h2>
+    <div class="points">
+      <div class="point"><span class="ico">⚔️</span><div><b>Des quêtes chaque jour</b><p>2 petites quêtes par rune : une séance, 8 verres d'eau, 7 h de sommeil, une gratitude… Chaque quête rapporte de l'XP.</p></div></div>
+      <div class="point"><span class="ico">🃏</span><div><b>Ta carte de joueur</b><p>Ta photo ou ton héros, ton niveau en énorme, une aura qui grandit avec ton rang : Bronze, Argent, Or… puis des rangs secrets jusqu'à Légendaire.</p></div></div>
+      <div class="point"><span class="ico">🎁</span><div><b>Un coffre chaque jour</b><p>Réussis toutes tes quêtes et ouvre un coffre : il cache un design de carte, du commun au légendaire.</p></div></div>
+      <div class="point"><span class="ico">🔥</span><div><b>Ton corps de runes</b><p>Plus tu montes une rune, plus ses veines de lumière rejoignent le cœur. Ton torse s'allume avec tes progrès.</p></div></div>
+      <div class="point"><span class="ico">⚡</span><div><b>Le Duel 1v1</b><p>6 manches rune contre rune, puis la finale Sowilo. Gagne des étoiles et des titres qui s'affichent sur ta carte.</p></div></div>
+      <div class="point"><span class="ico">❄️</span><div><b>Les Arcs de saison</b><p>3 mois pour te transformer, avec 10 quêtes par jour et une carte de saison à décrocher.</p></div></div>
+    </div>
+  </section>
+
+  <section style="display:grid;gap:14px">
+    <span class="eyebrow">Le test</span>
+    <h2>Comment ça se passe</h2>
+    <div class="etapes">
+      <div class="etape"><small>Dès le 15 novembre</small><b>Version web, sur ton téléphone</b><p>Tu reçois un lien et un code. Sowilo s'ajoute à ton écran d'accueil comme une vraie appli. Android ou iPhone.</p></div>
+      <div class="etape"><small>Jusqu'à début décembre</small><b>Tu joues 5 minutes par jour</b><p>Tu coches tes quêtes et tu me dis ce qui te plaît, ce qui bloque, ce qui manque. Chaque retour compte.</p></div>
+      <div class="etape"><small>Décembre</small><b>Le test sur le Play Store</b><p>Sowilo devient une appli Android officielle. Google demande un groupe de testeurs pendant 14 jours avant la sortie : c'est là que ton adresse Gmail sert.</p></div>
+      <div class="etape"><small>Janvier</small><b>La sortie</b><p>Les testeurs sont les premiers servis.</p></div>
+    </div>
+  </section>
+
+  <section class="appel">
+    <span class="eyebrow">Tu veux tester ?</span>
+    <h2>Envoie-moi ton adresse Gmail</h2>
+    <p>Réponds simplement au message que je t'ai envoyé avec :</p>
+    <ul>
+      <li><b>Ton prénom</b></li>
+      <li><b>Ton adresse Gmail</b> (celle de ton compte Google sur ton téléphone)</li>
+      <li><b>Android ou iPhone</b> : le test Play Store de décembre est réservé à Android, la version web marche sur les deux</li>
+    </ul>
+    <p class="note">Ton adresse sert uniquement à t'ouvrir l'accès au test. Elle n'est ni partagée ni utilisée pour autre chose. Ta partie reste sur ton téléphone.</p>
+  </section>
+
+  <footer>Sowilo · une appli de Léo · version test privée</footer>
+</main>
+</body>
+</html>
